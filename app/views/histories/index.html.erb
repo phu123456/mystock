@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+<%= render '/layouts/header' %>
+
+
+
+
+<div align="center">
+  <%= form_tag histories_path, method: :get do %>
+    จาก <%= text_field_tag 'search[date_from]', @search.date_from %> ถึง
+    <%= text_field_tag 'search[date_to]', @search.date_to %>
+    <%= text_field_tag :part_search, params[:part_search], placeholder: "อะไหล่/ทะเบียนรถ" %>
+    <%= submit_tag 'ค้นหา', class: 'btn search-button' %><br>
+    เฉพาะรายการที่มีรายจ่าย <%= check_box_tag 'activated[]' %>
+  <% end %>
+</div>
+
+<h2 align="center">ประวัติ</h2>
+<table class="table table-striped" style="width:90%" align="center">
+  <thead>
+    <tr>
+      <th class="ui-helper-center">ชื่อ</th>
+      <th class="ui-helper-center">จำนวนที่เปลี่ยน</th>
+      <th class="ui-helper-center">ราคา</th>
+      <th class="ui-helper-center">จำนวนใหม่</th>
+      <th class="ui-helper-center">ปี/เดือน/วัน</th>
+      <th class="ui-helper-center">คนอัพเดท</th>
+      <th class="ui-helper-center">ทะเบียนรถ</th>
+      <th class="ui-helper-center">หมายเหตุ</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @histories.each do |history| %>
+      <tr>
+        <td class="ui-helper-center"><%= history.name %></td>
+          <% if history.quantity.to_i > 0 %>
+             <td class="ui-helper-center"> +<%= history.quantity %> </td>
+          <% else %>
+             <td class="ui-helper-center"> <%= history.quantity %> </td>
+          <% end %>
+        <td class="ui-helper-center"> <%= history.price %> </td>
+        <td class="ui-helper-center"><font color="grey"><%= history.previous %> -> </font> <b> <%= history.current %> <b></td>
+        <td class="ui-helper-center"><%= history.update_date %></td>
+        <td class="ui-helper-center"><%= history.updater %></td>
+        <td class="ui-helper-center"><%= history.plate %></td>
+        <td class="ui-helper-center"><%= history.discription %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<center><font color="red" size="5.2"> ยอดรวม <%= @total_price %> </font></center>
+
+
+
+<br>
+
+
+
+<!-- <%= link_to 'New History', new_history_path %> -->

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  current: 1
+  previous: 1
+  quantity: 1
+  update_date: 2017-10-04
+  updater: MyText
+  plate: MyText
+  discription: MyText
+  price: 1
+
+two:
+  name: MyText
+  current: 1
+  previous: 1
+  quantity: 1
+  update_date: 2017-10-04
+  updater: MyText
+  plate: MyText
+  discription: MyText
+  price: 1

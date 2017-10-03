@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @history.name %>
+</p>
+
+<p>
+  <strong>Current:</strong>
+  <%= @history.current %>
+</p>
+
+<p>
+  <strong>Previous:</strong>
+  <%= @history.previous %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @history.quantity %>
+</p>
+
+<p>
+  <strong>Update date:</strong>
+  <%= @history.update_date %>
+</p>
+
+<p>
+  <strong>Updater:</strong>
+  <%= @history.updater %>
+</p>
+
+<p>
+  <strong>Plate:</strong>
+  <%= @history.plate %>
+</p>
+
+<p>
+  <strong>Discription:</strong>
+  <%= @history.discription %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @history.price %>
+</p>
+
+<%= link_to 'Edit', edit_history_path(@history) %> |
+<%= link_to 'Back', histories_path %>
