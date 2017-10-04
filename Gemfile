@@ -38,6 +38,7 @@ gem 'capistrano', '~> 3.4.0'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
 gem 'capistrano-sidekiq'
+gem 'listen', '>= 3.0.5', '< 3.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
