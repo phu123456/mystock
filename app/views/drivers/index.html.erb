@@ -1,0 +1,133 @@
+<p id="notice"><%= notice %></p>
+<%= render '/layouts/header' %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h1 align="center">พนักงานขับรถ</h1>
+<div align="center"><input placeholder="ค้นหาชื่อ" type="text" id="name-search" size="15" style="height:23px;"></div>
+<table class="table table-striped" style="width:75%" align="center" id="myTable" >
+  <thead>
+    <tr>
+      <th class="ui-helper-center">รายชื่อ </th>
+      <th onclick="sortTable(1)" class="ui-helper-center">วันหมดอาย <i class="fa fa-sort"></th>
+      <th class="ui-helper-center">ประเภท </th>
+      <th class="ui-helper-center">หมดอายุ </th>
+      <th class="ui-helper-center">สถานะ </th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody class="data-table">
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td class="ui-helper-center"><%= driver.name %></td>
+        <td class="ui-helper-center"><%= driver.expire %></td>
+        <td class="ui-helper-center"><%= driver.category %></td>
+        <td class="ui-helper-center">อีก <%= Driver.getExpire(driver.expire) %> วัน</td>
+        <td class="ui-helper-center <%= Driver.getStatus(driver.expire) %>"></td>
+        <td class="ui-helper-center"><%= link_to 'Show', driver %></td>
+        <td class="ui-helper-center"><%= link_to 'Edit', edit_driver_path(driver) %></td>
+        <td class="ui-helper-center"><%= link_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div align="center">
+  <%= link_to 'New Driver', new_driver_path %>
+</div>
+
+
+<script>
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc";
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("TR");
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+  $("#name-search").keyup(function() {
+    var value = this.value;
+    $(".data-table").find("tr").each(function(index) {
+        if (index === -1) return;
+        var id = $(this).find("td").first().text();
+        $(this).toggle(id.indexOf(value) !== -1);
+    });
+  });
+
+</script>
+
+<style>
+
+
+  .red {
+  background-image:
+    radial-gradient(
+      circle,
+      red 12px, transparent 12px
+    );
+  }
+
+  .green {
+  background-image:
+    radial-gradient(
+      circle,
+      green 12px, transparent 12px
+    );
+  }
+
+  .orange {
+  background-image:
+    radial-gradient(
+      circle,
+      orange 12px, transparent 12px
+    );
+  }
+</style>

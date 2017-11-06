@@ -6,12 +6,6 @@
  * Licensed under the MIT license.
  */
 
-//= require turbolinks
-//= require jquery
-//= require jquery_ujs
-
-
-
 ;(function($, undefined) {
 'use strict';
 
