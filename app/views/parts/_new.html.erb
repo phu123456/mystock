@@ -1,4 +1,4 @@
-<div style="position: absolute; left: 35%; width: 400px; height: 250px; border: 4px solid black">
+<div style="position: absolute; left: 35%; width: 400px; height: 450px; border: 4px solid black">
   <div align="center">
     <br><br>
     <%= form_with(model: part, local: true) do |form| %>
@@ -20,12 +20,27 @@
       </div>
 
       <div class="field">
-        <%= form.label :จำนวน %>
-        <%= form.number_field :quantity, id: 'text_field_two', :required => 'required' %>
+        <%= form.label :serial %>
+        <%= form.text_area :serial, id: 'text_field_two', :required => 'required' %>
       </div>
 
       <div class="field">
-        <%= form.select :storage_id, options_for_select(Storage.all.map{|c| ["ห้อง "+c.room+" - โซน "+c.zone, c.id]}, form.object.storage_id), {:include_blank => 'เลือกห้องเก็บ'}, id: 'text_field_three', :required => 'required'  %>
+        <%= form.label :truck_model %>
+        <%= form.text_area :truck_model, id: 'text_field_three', :required => 'required' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :category %>
+        <%= form.text_area :category, id: 'text_field_four', :required => 'required' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :จำนวน %>
+        <%= form.number_field :quantity, id: 'text_field_five', :required => 'required' %>
+      </div>
+
+      <div class="field">
+        <%= form.select :storage_id, options_for_select(Storage.all.map{|c| ["ห้อง "+c.room+" - โซน "+c.zone+" - ชั้น "+c.level.to_s+" - ตำแหน่ง "+c.position, c.id]}, form.object.storage_id), {:include_blank => 'เลือกห้องเก็บ'}  %>
       </div>
 
 

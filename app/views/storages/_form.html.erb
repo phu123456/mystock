@@ -1,4 +1,4 @@
-<div style="position: absolute; left: 34%; width: 400px; height: 250px; border: 4px solid black">
+<div style="position: absolute; left: 34%; width: 400px; height: 350px; border: 4px solid black">
   <div align="center">
     <br><br>
     <%= form_with(model: storage, local: true) do |form| %>
@@ -22,6 +22,16 @@
       <div class="field">
         <%= form.label :zone %>
         <%= form.text_area :zone, id: :storage_zone %>
+      </div>
+
+      <div class="field">
+        <%= form.label :level %>
+        <%= form.text_area :level, id: :storage_level %>
+      </div>
+
+      <div class="field">
+        <%= form.label :position %>
+        <%= form.text_area :position, id: :storage_position %>
       </div>
 
       <div class="actions">

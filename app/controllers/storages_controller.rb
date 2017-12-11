@@ -70,6 +70,6 @@ class StoragesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def storage_params
-      params.require(:storage).permit(:room, :zone)
+      params.require(:storage).permit(:room, :zone, :level, :position)
     end
 end
