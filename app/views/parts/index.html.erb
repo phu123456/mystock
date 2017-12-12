@@ -11,9 +11,23 @@
 -->
 <h2 align="center">อะไหล่</h2>
 
-<div align="center">
-  <input type="text" id="search" placeholder="Type to search">
-<div>
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-md-4"></div> -->
+    <div align="center">
+      <input type="text" id="search" placeholder="ค้นหาอะไหล่">
+      &emsp; เลือกชนิด:
+      <select>
+        <option value="all" selected>ทั้งหมด</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+        <option value="5">Five</option>
+      </select>
+    </div>
+  <!-- </div>
+</div> -->
 
 <table class="table table-striped" style="width:75%" align="center">
   <thead>
@@ -54,7 +68,7 @@
 
 <script>
 var $rows = $('#search-table tr');
- $('#search').keyup(function() {
+ $('#search').on('input',function(e){
    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
    $rows.show().filter(function() {
        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
