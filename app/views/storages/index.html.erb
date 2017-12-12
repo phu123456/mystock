@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-<%= render '/layouts/header' %>
+<!-- <p id="notice"><%= notice %></p>
 <h2 align="center">ห้องเก็บของ</h2>
 <br>
 <table class="table table-striped" style="width:55%" align="center">
@@ -30,4 +29,66 @@
 <div align="center">
   <br>
   <%= link_to 'เพิ่มห้อง', new_storage_path %>
+</div> -->
+
+<%= render '/layouts/header' %>
+<div align="center">
+  <select id="type-select">
+    <option value="">Choose here</option>
+    <option value="hino">Hino</option>
+    <option value="isuzu">Isuzu</option>
+    <option value="trailer">อะไหล่หาง</option>
+  </select>
 </div>
+<br>
+<div align="center">
+  <object style="border-style: dashed;" data="<%= asset_path('storage4.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
+</div>
+<script>
+
+  var mySVG = document.getElementById("svg");
+  var svgDoc;
+  var delta;
+  mySVG.addEventListener("load",function() {
+    svgDoc = mySVG.contentDocument;
+    delta = svgDoc.getElementsByClassName("shelf");
+    console.log(delta.length)
+     for (var i = 0; i < delta.length; i++) {
+       delta[i].addEventListener('click', selectedActive, false);
+     }
+  })
+
+  function selectedActive() {
+    changeToBlue()
+    console.log(this.id)
+    this.style.setProperty("fill", "green", "");
+  }
+
+  function changeToBlue() {
+    for (var i = 0; i < delta.length; i++) {
+      delta[i].style.setProperty("fill", "#cfe2f3", "");
+    }
+  }
+
+  $('#type-select').on('change', function() {
+    changeToBlue()
+    console.log(this.value in category_dict)
+    if (this.value in category_dict) {
+      for (var i = 0; i < delta.length; i++) {
+        if (category_dict[this.value].includes(delta[i].id)) delta[i].style.setProperty("fill", "red", "");
+      }
+    }
+  })
+
+  category_dict= {
+    "hino": ["D-1-2", "D-1-3", "C-1-1", "C-1-2", "C-1-3", "C-1-4", "B-1-1", "B-1-2"],
+    "trailer": ["B-0-3", "B-1-3", "B-2-3", "B-3-3"],
+    "isuzu": ["D-2-2", "D-2-3", "C-2-1", "C-2-2", "C-2-3", "C-2-4", "B-2-1", "B-2-2"]
+  };
+
+  // console.log(category_dict["hino"].includes("D-1-2"))
+
+  // var svgDoc = mySVG.contentDocument;
+  // svgDoc.getElementById("haha").style.cursor = "pointer";
+  // console.log(svgDoc.getElementById("test"))
+</script>

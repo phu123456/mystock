@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %>
+<!-- <p id="notice"><%= notice %> -->
 <%= render '/layouts/header' %>
 
 <!-- <div align="center">
@@ -36,11 +36,13 @@
         <td class="ui-helper-center"><%= part.truck_model %></td>
         <td class="ui-helper-center"><%= part.category %></td>
         <td class="ui-helper-center"><%= part.quantity %></td>
-        <td class="ui-helper-center">ห้อง <%= part.storage.room %> โซน <%= part.storage.zone %> ชั้น <%= part.storage.level %> ตำแหน่ง <%= part.storage.position %> </td>
-        <div class="btn-group">
-          <td class="ui-helper-center"><%= link_to 'เปลี่ยนจำนวน', edit_part_path(part) %></td>
-          <td class="ui-helper-center"><%= link_to 'Destroy', part, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
-        </div>
+        <td class="ui-helper-center"><!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-xs show-position" data-toggle="modal" data-target="#exampleModalLong" value="<%= part.shelf %>">
+            ดูตำแหน่ง
+          </button>
+        </td>
+        <td class="ui-helper-center"><%= link_to 'เปลี่ยนจำนวน', edit_part_path(part) %></td>
+        <td class="ui-helper-center"><%= link_to 'Destroy', part, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-xs" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -50,7 +52,6 @@
   <%= link_to 'เพิ่มอะไหล่', new_part_path %>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
 var $rows = $('#search-table tr');
  $('#search').keyup(function() {
@@ -60,4 +61,69 @@ var $rows = $('#search-table tr');
        return !~text.indexOf(val);
    }).hide();
  });
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <object style="border-style: dashed;" data="<%= asset_path('storage4.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $('.show-position').click(function() {
+    var mySVG = document.getElementById("svg")
+    var svgDoc;
+    var chosen = this.value
+    mySVG.addEventListener("load",function() {
+      svgDoc = mySVG.contentDocument;
+      var delta = svgDoc.getElementsByClassName("shelf");
+      backToBlue(delta)
+      for (var i = 0; i < delta.length; i++) {
+        if (delta[i].id == chosen) delta[i].style.setProperty("fill", "red", "");
+      }
+    })
+    console.log(this.value)
+  })
+  // var mySVG = document.getElementById("svg");
+  // var svgDoc;
+  // var delta;
+  // mySVG.addEventListener("load",function() {
+  //   svgDoc = mySVG.contentDocument;
+  //   delta = svgDoc.getElementsByClassName("shelf");
+  //   console.log(delta.length)
+  //    for (var i = 0; i < delta.length; i++) {
+  //      delta[i].addEventListener('click', selectedActive, false);
+  //    }
+  // })
+  //
+  function backToBlue(delta) {
+    for (var i = 0; i < delta.length; i++) {
+      delta[i].style.setProperty("fill", "#cfe2f3", "");
+    }
+  }
+  //   console.log(this.id)
+  //   this.style.setProperty("fill", "green", "");
+  // }
+
+
+  // var svgDoc = mySVG.contentDocument;
+  // svgDoc.getElementById("haha").style.cursor = "pointer";
+  // console.log(svgDoc.getElementById("test"))
 </script>

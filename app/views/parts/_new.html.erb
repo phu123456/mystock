@@ -39,15 +39,83 @@
         <%= form.number_field :quantity, id: 'text_field_five', :required => 'required' %>
       </div>
 
+      <font id="shelfSelected"></font>
+
       <div class="field">
-        <%= form.select :storage_id, options_for_select(Storage.all.map{|c| ["ห้อง "+c.room+" - โซน "+c.zone+" - ชั้น "+c.level.to_s+" - ตำแหน่ง "+c.position, c.id]}, form.object.storage_id), {:include_blank => 'เลือกห้องเก็บ'}  %>
+        <%= form.text_area :shelf, id: 'text_field_six', :required => 'required', :hidden => true %>
       </div>
+
+      <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#exampleModalLong">
+        เลือกตำแหน่งเก็บ
+      </button>
+      <!-- <div class="field">
+        <%= form.select :storage_id, options_for_select(Storage.all.map{|c| ["ห้อง "+c.room+" - โซน "+c.zone+" - ชั้น "+c.level.to_s+" - ตำแหน่ง "+c.position, c.id]}, form.object.storage_id), {:include_blank => 'เลือกห้องเก็บ'}  %>
+      </div> -->
 
 
       <div class="actions">
-        <input type="submit" name="commit" value="เพิ่มอะไหล่" data-disable-with="Create Part" id='submitButtonId'>
+        <br>
+        <input type="submit" name="commit" value="เพิ่มอะไหล่" id='submitButtonId'>
       </div>
 
     <% end %>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <object style="border-style: dashed;" data="<%= asset_path('storage4.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button> -->
+        <button type="button" class="btn btn-primary" id="save" data-dismiss="modal">บันทึก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var mySVG = document.getElementById("svg");
+  var svgDoc;
+  var delta;
+  var selectedShelf;
+  mySVG.addEventListener("load",function() {
+    svgDoc = mySVG.contentDocument;
+    delta = svgDoc.getElementsByClassName("shelf");
+    console.log(delta.length)
+     for (var i = 0; i < delta.length; i++) {
+       delta[i].addEventListener('click', selectedActive, false);
+     }
+  })
+
+  function selectedActive() {
+    for (var i = 0; i < delta.length; i++) {
+      delta[i].style.setProperty("fill", "#cfe2f3", "");
+    }
+    console.log(this.id)
+    selectedShelf = this.id
+    this.style.setProperty("fill", "green", "");
+  }
+
+  $('#save').click(function() {
+    document.getElementById('text_field_six').value = selectedShelf
+    console.log(selectedShelf)
+    var info = (selectedShelf.split('-'))
+    if (info == null) document.getElementById('shelfSelected').innerHTML = 'ตำแหน่ง: โซน ' + info[0] + ' ชั้น ' + info[1];
+    else {
+      document.getElementById('shelfSelected').innerHTML = 'ตำแหน่ง: โซน ' + info[0] + ' ชั้น ' + info[1] + ' แถว ' + info[2]
+    }
+  })
+</script>
