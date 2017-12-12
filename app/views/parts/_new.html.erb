@@ -75,8 +75,10 @@
       </div>
       <div class="modal-body">
         <div align="center">
-          <object style="border-style: dashed;" data="<%= asset_path('storage4.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
+          <object style="border-style: dashed;" data="<%= asset_path('new-storage2.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
         </div>
+        <br>
+        <p align="center" id="show-pos"></p>
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button> -->
@@ -94,7 +96,7 @@
   mySVG.addEventListener("load",function() {
     svgDoc = mySVG.contentDocument;
     delta = svgDoc.getElementsByClassName("shelf");
-    console.log(delta.length)
+    // console.log(delta.length)
      for (var i = 0; i < delta.length; i++) {
        delta[i].addEventListener('click', selectedActive, false);
      }
@@ -102,20 +104,38 @@
 
   function selectedActive() {
     for (var i = 0; i < delta.length; i++) {
-      delta[i].style.setProperty("fill", "#cfe2f3", "");
+      if (delta[i].id.split("-")[1] == 0) delta[i].style.setProperty("fill", "#4a86e8", "");
+      else delta[i].style.setProperty("fill", "#cfe2f3", "");
     }
-    console.log(this.id)
+    // console.log(this.id)
     selectedShelf = this.id
+    getPosInfo(selectedShelf)
+    var info = (selectedShelf.split('-'))
+    document.getElementById('show-pos').innerHTML = getPosInfo(selectedShelf)
     this.style.setProperty("fill", "green", "");
   }
 
   $('#save').click(function() {
     document.getElementById('text_field_six').value = selectedShelf
-    console.log(selectedShelf)
+    // console.log(selectedShelf)
     var info = (selectedShelf.split('-'))
-    if (info == null) document.getElementById('shelfSelected').innerHTML = 'ตำแหน่ง: โซน ' + info[0] + ' ชั้น ' + info[1];
-    else {
-      document.getElementById('shelfSelected').innerHTML = 'ตำแหน่ง: โซน ' + info[0] + ' ชั้น ' + info[1] + ' แถว ' + info[2]
-    }
+    document.getElementById('shelfSelected').innerHTML = getPosInfo(selectedShelf)
   })
+
+  function getPosInfo(pos) {
+    my_dict = {
+      'l':'ซ้าย',
+      'r':'ขวา',
+      '1':'1',
+      '2':'2',
+      '3':'3',
+      '4':'4',
+      '0':'บนพื้น'
+    }
+    var splited = pos.split('-')
+    console.log(splited[2])
+    if (splited.length == 2)  return 'ตำแหน่ง: โซน ' + splited[0] + ', ชั้น ' + splited[1][0]
+    else if (splited.length == 3) return 'ตำแหน่ง: โซน ' + splited[0] + ', แถว ' + splited[2] + ', ชั้น ' + my_dict[splited[1]]
+    else return 'ตำแหน่ง: โซน ' + splited[0] + ', ชั้น ' + splited[1] + ', แถว ' + splited[2] + ', ฝั่ง ' + my_dict[splited[3]]
+  }
 </script>

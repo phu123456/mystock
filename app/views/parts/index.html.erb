@@ -75,7 +75,7 @@ var $rows = $('#search-table tr');
       </div>
       <div class="modal-body">
         <div align="center">
-          <object style="border-style: dashed;" data="<%= asset_path('storage4.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
+          <object style="border-style: dashed;" data="<%= asset_path('new-storage2.svg') %>" type="image/svg+xml" id="svg" height=300px; width=450px;></object>
         </div>
       </div>
       <div class="modal-footer">
@@ -96,7 +96,10 @@ var $rows = $('#search-table tr');
       var delta = svgDoc.getElementsByClassName("shelf");
       backToBlue(delta)
       for (var i = 0; i < delta.length; i++) {
-        if (delta[i].id == chosen) delta[i].style.setProperty("fill", "red", "");
+        if (delta[i].id == chosen) {
+          delta[i].style.setProperty("fill", "#6ef442", "");
+          // console.log(delta[i]);
+        }
       }
     })
     console.log(this.value)
@@ -116,6 +119,7 @@ var $rows = $('#search-table tr');
   function backToBlue(delta) {
     for (var i = 0; i < delta.length; i++) {
       delta[i].style.setProperty("fill", "#cfe2f3", "");
+
     }
   }
   //   console.log(this.id)
