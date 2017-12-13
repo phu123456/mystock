@@ -21,6 +21,11 @@
       </div>
 
       <div class="field">
+        <%= form.label :ทะเบียนรถ %>
+        <%= form.text_field :vehicle, id: :driver_vehicle %>
+      </div>
+
+      <div class="field">
         <%= form.label :วันหมดอายุบัตร %>
         <%= form.date_select :expire, id: :driver_expire %>
       </div>

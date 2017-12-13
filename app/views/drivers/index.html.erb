@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th class="ui-helper-center">รายชื่อ </th>
+      <th class="ui-helper-center">ทะเบียนรถ </th>
       <th onclick="sortTable(1)" class="ui-helper-center">วันหมดอาย <i class="fa fa-sort"></th>
       <th class="ui-helper-center">ประเภท </th>
       <th class="ui-helper-center">หมดอายุ </th>
@@ -19,6 +20,7 @@
     <% @drivers.each do |driver| %>
       <tr>
         <td class="ui-helper-center"><%= driver.name %></td>
+        <td class="ui-helper-center"><%= driver.vehicle %></td>
         <td class="ui-helper-center"><%= driver.expire %></td>
         <td class="ui-helper-center"><%= driver.category %></td>
         <td class="ui-helper-center">อีก <%= Driver.getExpire(driver.expire) %> วัน</td>
