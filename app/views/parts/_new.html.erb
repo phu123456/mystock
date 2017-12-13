@@ -15,23 +15,32 @@
       <% end %>
 
       <div class="field">
-        <%= form.label :name %>
+        <%= form.label :ชื่ออะไหล่ %>
         <%= form.text_area :name, id: 'text_field_one', :required => 'required' %>
       </div>
 
       <div class="field">
-        <%= form.label :serial %>
+        <%= form.label :รหัส %>
         <%= form.text_area :serial, id: 'text_field_two', :required => 'required' %>
       </div>
 
       <div class="field">
-        <%= form.label :truck_model %>
+        <%= form.label :ประเภทรถ %>
         <%= form.text_area :truck_model, id: 'text_field_three', :required => 'required' %>
       </div>
 
       <div class="field">
-        <%= form.label :category %>
-        <%= form.text_area :category, id: 'text_field_four', :required => 'required' %>
+        <!-- <%= form.label :ประเภทอะไหล่ %> -->
+        <%= form.text_area :category, id: 'text-category', :required => 'required', :hidden => true %>
+      </div>
+
+      <div class="field">
+        <select id="category-select">
+          <option value="">-เลือกประเภทอะไหล่-</option>
+          <option value="อะไหล่เครื่อง">อะไหล่เครื่อง</option>
+          <option value="เบรค">เบรค</option>
+          <option value="เกียร์">เกียร์</option>
+        </select>
       </div>
 
       <div class="field">
@@ -100,6 +109,11 @@
      for (var i = 0; i < delta.length; i++) {
        delta[i].addEventListener('click', selectedActive, false);
      }
+  })
+
+  $('#category-select').on('change', function() {
+    document.getElementById('text-category').value = this.value
+    // alert( this.value );
   })
 
   function selectedActive() {
