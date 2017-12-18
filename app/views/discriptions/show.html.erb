@@ -14,9 +14,49 @@
   <strong>Tyre:</strong>
   <%= @discription.tyre_id %>
 </p>
+<button id="ori">original</button>
+<button id="90d">90d</button>
+<button id="180d">180d</button>
+<button id="270d">270d</button>
 
-<img src="<%= @discription.image %>" width="400px" height="240px">
+<br><br><br><br><br><br><br><br><br>
+
+<img id="my_img" src="<%= @discription.image %>" width="400px" height="240px">
+
+<script>
+
+$('#ori').click( function () {
+  $('#my_img').removeAttr('class');
+})
+
+$('#90d').click( function () {
+  $('#my_img').removeAttr('class');
+  $('#my_img').addClass('img_90');
+})
+
+$('#180d').click( function () {
+  $('#my_img').removeAttr('class');
+  $('#my_img').addClass('img_180');
+})
+
+$('#270d').click( function () {
+  $('#my_img').removeAttr('class');
+  $('#my_img').addClass('img_270');
+})
 
 
-<%= link_to 'Edit', edit_discription_path(@discription) %> |
-<%= link_to 'Back', discriptions_path %>
+</script>
+
+<style>
+  .img_90 {
+    transform: rotate(90deg);
+  }
+
+  .img_180 {
+    transform: rotate(180deg);
+  }
+
+  .img_270 {
+    transform: rotate(270deg);
+  }
+</style>
