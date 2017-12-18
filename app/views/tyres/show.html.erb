@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Serial:</strong>
+  <%= @tyre.serial %>
+</p>
+
+<p>
+  <strong>Brand:</strong>
+  <%= @tyre.brand %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @tyre.truck_id %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @tyre.position %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @tyre.status %>
+</p>
+
+<%= link_to 'Edit', edit_tyre_path(@tyre) %> |
+<%= link_to 'Back', tyres_path %>

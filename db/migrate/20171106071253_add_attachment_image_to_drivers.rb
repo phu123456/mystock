@@ -1,4 +1,4 @@
-class AddAttachmentImageToDrivers < ActiveRecord::Migration[4.2]
+class AddAttachmentImageToDrivers < ActiveRecord::Migration[5.1]
   def self.up
     change_table :drivers do |t|
       t.attachment :image

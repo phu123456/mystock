@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Discriptions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Occur</th>
+      <th>Detail</th>
+      <th>Tyre</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @discriptions.each do |discription| %>
+      <tr>
+        <td><%= discription.occur %></td>
+        <td><%= discription.detail %></td>
+        <td><%= discription.tyre_id %></td>
+        <td><%= link_to 'Show', discription %></td>
+        <td><%= link_to 'Edit', edit_discription_path(discription) %></td>
+        <td><%= link_to 'Destroy', discription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Discription', new_discription_path %>

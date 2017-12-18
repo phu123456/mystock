@@ -1,0 +1,208 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Plate:</strong>
+  <%= @truck.plate %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @truck.category.split("-").join() %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @truck.model %>
+</p>
+
+
+<div id=selected-category>
+</div>
+
+<div class="modal fade" id="availableModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">ใส่ยาง</h3>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-sm-4">
+            <font>เลือกรายการที่ต้องการทำ: </font>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="exist-case" value="option1"> เลือกยางที่อยุ่ในระบบ
+              </label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="new-case" value="option1"> เพิ่มยางใหม่
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-class">
+          <div align="center" id="default-form">
+            <font color="red">กรุณาเลือกรายการที่ต้องการทำ</font>
+          </div>
+
+          <div id="tyre-form" style="display:none;" >
+            <%= form_with(model: @tyre, local: true) do |form| %>
+              <div class="field">
+                <%= form.label :serial %>
+                <%= form.text_field :serial, id: :tyre_serial %>
+              </div>
+
+              <div class="field">
+                <%= form.label :brand %>
+                <%= form.text_field :brand, id: :tyre_brand %>
+              </div>
+
+              <div class="field">
+                <%= form.label :truck_id %>
+                <%= form.number_field :truck_id, id: :tyre_truck_id, :value => @truck.id, :readonly => true %>
+              </div>
+
+              <div class="field">
+                <%= form.label :position %>
+                <%= form.text_field :position, id: :tyre_position, :value => nil, :readonly => true %>
+              </div>
+
+              <div class="field">
+                <%= form.label :status %>
+                <%= form.text_field :status, id: :tyre_status, :value => "กำลังใช้งาน", :readonly => true %>
+              </div>
+
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">บันทึก</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="usedModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">อัพเดทยาง</h3>
+      </div>
+      <div class="modal-body">
+        <div id=discript-form>
+          <%= form_for @discription, html: { multipart: true} do |form| %>
+            <div class="field">
+              <%= form.label :occur %>
+              <%= form.date_select :occur, id: :discription_occur %>
+            </div>
+
+            <div class="field">
+              <%= form.label :detail %>
+              <%= form.text_field :detail, id: :discription_detail %>
+            </div>
+
+            <div class="field">
+              <%= form.label :tyre_id %>
+              <%= form.number_field :tyre_id, id: :discription_tyre_id, :value => nil, :readonly => true %>
+            </div>
+
+            <div class="field">
+              <!-- <%= form.label :รูปบัตร %> -->
+              <%= form.file_field :image %>
+            </div>
+
+            <div class="actions">
+              <%= form.submit %>
+            </div>
+          <% end %>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= link_to 'Edit', edit_truck_path(@truck) %> |
+<%= link_to 'Back', trucks_path %>
+
+<script>
+  var current_id;
+  var category = "<%= @truck.category.split("-").join("") %>"
+  category_dict={
+      "10Wheels":"<%= asset_path('10Wheels.svg') %>",
+      "12WheelsTrailer":"<%= asset_path('12WheelsTrailer.svg') %>"
+  };
+  document.getElementById('selected-category').innerHTML = '<object data="' + category_dict[category] + '" type="image/svg+xml" id="svg" height=250px; width=400px;  display: none;></object>'
+
+  var all_tyre_pos = '<%= raw Tyre.where(truck_id: @truck.id).pluck(:position) %>'
+  var mySVG = document.getElementById("svg");
+  var svgDoc;
+  mySVG.addEventListener("load",function() {
+    svgDoc = mySVG.contentDocument;
+    var delta = svgDoc.getElementsByClassName("wheel");
+    // console.log(delta)
+    for (var i = 0; i < delta.length; i++) {
+      if (all_tyre_pos.includes(delta[i].id.split("-")[1])) {
+        svgDoc.getElementById(delta[i].id).style.setProperty("fill", "grey", "");
+        delta[i].addEventListener('click', usedWheel, false);
+      } else {
+        delta[i].addEventListener('click',
+        function(){
+            availableWheel()
+            current_id = this.id.split("-")[1]
+            document.getElementById('tyre_position').value = current_id
+        }, false);
+      }
+    }
+  })
+
+  function usedWheel() {
+    current_id = this.id.split("-")[1]
+    document.getElementById('discription_tyre_id').value = current_id
+    $('#usedModal').modal('toggle');
+  }
+  function availableWheel() {
+    $('#availableModal').modal('toggle');
+  }
+
+  $('.form-check-input').click(function() {
+    $('#default-form').hide();
+  if ($('#exist-case').is(':checked')) {
+    console.log("ja")
+  } else if ($('#new-case').is(':checked')) {
+    $('#tyre-form').show();
+      console.log(current_id)
+    }
+  })
+
+</script>
+
+<style>
+  .border-class
+  {
+    border:thin black solid;
+    margin:20px;
+    padding:20px;
+  }
+</style>

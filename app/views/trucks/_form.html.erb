@@ -1,0 +1,70 @@
+<%= form_with(model: truck, local: true) do |form| %>
+  <% if truck.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(truck.errors.count, "error") %> prohibited this truck from being saved:</h2>
+
+      <ul>
+      <% truck.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :plate %>
+    <%= form.text_field :plate, id: :truck_plate %>
+  </div>
+
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  <div>
+    <%= form.text_area :category, id: :truck_category, id: "truck_category", :readonly => true %>
+  </div>
+  <br>
+  <font id="show-type" align"center"></font>
+  <div id="selected-category"></div>
+
+  <div class="field">
+    <%= form.label :model %>
+    <%= form.text_field :model, id: :truck_model %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  function getCategory(obj) {
+    document.getElementById('truck_category').value = obj.id
+    document.getElementById('selected-category').innerHTML = '<img src="' + category_dict[obj.name] + '"height="60%" width="75%">'
+    document.getElementById('show-type').innerHTML = obj.name.split(/(?=[A-Z])/).join(" ")
+    $(".type-text").show();
+    $(".form-submit").show();
+  };
+</script>
+
+
+<div id="myModal" class="modal bd-example-modal-lg fade" role="dialog" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- <font align="center">Select Type</font> -->
+      <div>
+        <table style="margin: 0px auto;" border="1" width="80%">
+          <tr align="center">
+            <td><br>
+                <img src="<%= asset_path('10Wheels.svg') %>" height="65%" width="100%">
+                <button id="10-Wheels" type="button" data-dismiss="modal" class="btn btn-success" onclick="getCategory(this)" name="10Wheels">Select</button>
+              </td>
+            </tr>
+            <tr align="center">
+              <td><br>
+                <img src="<%= asset_path('12WheelsTrailer.svg') %>" height="65%" width="100%">
+                <button id="12-Wheels-Trailer" type="button" data-dismiss="modal" class="btn btn-success" onclick="getCategory(this)" name="12WheelsTrailer">Select</button>
+              </td>
+            </tr>
+          </table><br>
+        </div>
+      </div>
+    </div>
+  </div>

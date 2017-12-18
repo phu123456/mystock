@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213041934) do
+ActiveRecord::Schema.define(version: 20171218060844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "discriptions", force: :cascade do |t|
+    t.date "occur"
+    t.string "detail"
+    t.integer "tyre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "drivers", force: :cascade do |t|
     t.string "name"
@@ -61,6 +73,24 @@ ActiveRecord::Schema.define(version: 20171213041934) do
     t.datetime "updated_at", null: false
     t.integer "level"
     t.string "position"
+  end
+
+  create_table "trucks", force: :cascade do |t|
+    t.string "plate"
+    t.string "category"
+    t.string "model"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tyres", force: :cascade do |t|
+    t.string "serial"
+    t.string "brand"
+    t.integer "truck_id"
+    t.string "position"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

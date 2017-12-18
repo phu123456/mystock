@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Occur:</strong>
+  <%= @discription.occur %>
+</p>
+
+<p>
+  <strong>Detail:</strong>
+  <%= @discription.detail %>
+</p>
+
+<p>
+  <strong>Tyre:</strong>
+  <%= @discription.tyre_id %>
+</p>
+
+<img src="<%= @discription.image %>" width="400px" height="240px">
+
+
+<%= link_to 'Edit', edit_discription_path(@discription) %> |
+<%= link_to 'Back', discriptions_path %>

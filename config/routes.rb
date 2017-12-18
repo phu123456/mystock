@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :discriptions
+  resources :tyres
+  resources :trucks
   resources :drivers
   devise_for :users
   resources :storages

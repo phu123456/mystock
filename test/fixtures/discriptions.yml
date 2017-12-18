@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  occur: 2017-12-18
+  detail: MyString
+  tyre_id: 1
+
+two:
+  occur: 2017-12-18
+  detail: MyString
+  tyre_id: 1
