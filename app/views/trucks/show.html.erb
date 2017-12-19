@@ -54,8 +54,7 @@
           <div align="center" id="default-form">
             <font color="red">กรุณาเลือกรายการที่ต้องการทำ</font>
           </div>
-
-          <div id="tyre-form" style="display:none;" >
+          <div id="tyre-form" style="display:none;">
             <%= form_with(model: @tyre, local: true) do |form| %>
               <div class="field">
                 <%= form.label :serial %>
@@ -88,13 +87,42 @@
             <% end %>
 
           </div>
+
+          <div id="tyre-available" style="display:none;">
+            <div id="tyre-select-available"></div><br>
+
+            <fieldset disabled>
+              <div class="form-group">
+                <label>ทะเบียนรถ</label>
+                <input id="current-truck" type="text" class="form-control" name="<%= @truck.id %>" value="<%= @truck.plate %>" ></input>
+              </div>
+            </fieldset>
+
+            <fieldset disabled>
+              <div class="form-group">
+                <label>ตำแหน่งยาง</label>
+                <input id="available-position" type="text" class="form-control" value="" ></input>
+              </div>
+            </fieldset>
+
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-2">
+                <button class="btn-success" id="btn-available">บันทึก</button>
+              </div>
+              <div class="col-sm-2">
+                <button type="button" class="btn-danger" data-dismiss="modal">ยกเลิก</button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-primary">บันทึก</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -149,7 +177,7 @@
               <textarea class="form-control" id="detail" rows="2"></textarea>
             </div>
 
-            <div class="form-group" id="tyre-select">
+            <div class="form-group" id="tyre-select-used">
             </div>
 
             <div class="form-group">
@@ -213,7 +241,8 @@
 //   console.log($(this).val())
 // })
 $( document ).ready(function() {
-  document.getElementById('tyre-select').innerHTML = '<label for="exampleFormControlSelect1">ยางที่ใส่แทน</label><select id="selector" data-live-search="true" class="form-control selectpicker"><option selected disabled hidden>--เลือกยาง--</option><% Tyre.where(truck_id: nil).each do |tyre| %><option value="<%= tyre.id %>">เลข: <%= tyre.serial %>, ยี่ห้อ: <%= tyre.brand %></option><% end %></select>'
+  document.getElementById('tyre-select-used').innerHTML = '<label for="exampleFormControlSelect1">ยางที่ใส่แทน</label><select id="selector" data-live-search="true" class="form-control selectpicker"><option selected disabled hidden>--เลือกยาง--</option><% Tyre.where(truck_id: nil).each do |tyre| %><option value="<%= tyre.id %>">เลข: <%= tyre.serial %>, ยี่ห้อ: <%= tyre.brand %></option><% end %></select>'
+  document.getElementById('tyre-select-available').innerHTML = '<label for="exampleFormControlSelect1">ยางที่ใส่แทน</label><select id="selector-available" data-live-search="true" class="form-control selectpicker"><option selected disabled hidden>--เลือกยาง--</option><% Tyre.where(truck_id: nil).each do |tyre| %><option value="<%= tyre.id %>">เลข: <%= tyre.serial %>, ยี่ห้อ: <%= tyre.brand %></option><% end %></select>'
 });
   var current_pos;
   var current_tyre_id;
@@ -235,12 +264,12 @@ $( document ).ready(function() {
 
   var mySVG = document.getElementById("svg");
   var svgDoc;
-  mySVG.addEventListener("load",function() {
+  mySVG.addEventListener("load", function() {
     svgDoc = mySVG.contentDocument;
     var delta = svgDoc.getElementsByClassName("wheel");
     // console.log(delta)
     for (var i = 0; i < delta.length; i++) {
-      console.log(all_tyre_pos)
+      // console.log(all_tyre_pos)
       // console.log(parseInt(delta[i].id.split("-")[1]))
       if (all_tyre_pos.includes(parseInt(delta[i].id.split("-")[1]))) {
         svgDoc.getElementById(delta[i].id).style.setProperty("fill", "grey", "");
@@ -251,6 +280,8 @@ $( document ).ready(function() {
             availableWheel()
             current_pos = this.id.split("-")[1]
             document.getElementById('tyre_position').value = current_pos
+            document.getElementById('available-position').value = current_pos
+
         }, false);
       }
     }
@@ -276,10 +307,11 @@ $( document ).ready(function() {
   $('.form-check-input').click(function() {
     $('#default-form').hide();
   if ($('#exist-case').is(':checked')) {
-    console.log("ja")
+    $('#tyre-form').hide();
+    $('#tyre-available').show();
   } else if ($('#new-case').is(':checked')) {
+    $('#tyre-available').hide();
     $('#tyre-form').show();
-      console.log(current_pos)
     }
   })
 
@@ -312,6 +344,23 @@ $( document ).ready(function() {
       }
     })
   });
+
+  $('#btn-available').click(function() {
+    document.getElementById("available-position").disabled = true;
+    $.ajax({
+      type:"GET",
+      url:"/tyres/available",
+      data: {
+        current_truck: document.getElementById('current-truck').name,
+        current_position: $('#available-position').val(),
+        selected_tyre: document.getElementById('selector-available').value
+      },
+      dataType:"json",
+      success: function(data){
+        location.reload();
+      }
+    })
+  })
 
 </script>
 

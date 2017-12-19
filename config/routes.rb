@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :tyres do
     collection do
       get 'swap'
+      get 'available'
     end
   end
 

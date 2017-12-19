@@ -13,16 +13,6 @@ class TyresController < ApplicationController
   end
 
   def swap
-    # current_tyre: current_id,
-    # discription: $('#detail').val(),
-    # new_tyre: $('#selector').val(),
-    # change_date: document.getElementById("inputdatepicker").value
-    # puts @new_tyre
-    # puts "sssssssssss"
-    # puts params
-    # puts "sssssssssss"
-    # puts @new_t/yre
-
     @discription = Discription.new({"occur":params[:change_date], "detail":params[:discription], "tyre_id":params[:current_tyre]})
     @discription.save
 
@@ -37,7 +27,13 @@ class TyresController < ApplicationController
     @new_tyre.update_attribute(:status, "กำลังใช้งาน")
     @new_tyre.update_attribute(:truck_id, params[:truck_id])
     @new_tyre.update_attribute(:position, params[:current_position])
+  end
 
+  def available
+    tyre = Tyre.find(params[:selected_tyre])
+    tyre.update_attribute(:position, params[:current_position])
+    tyre.update_attribute(:truck_id, params[:current_truck].to_i)
+    tyre.update_attribute(:status, "กำลังใช้งาน")
   end
   # GET /tyres/new
   def new
