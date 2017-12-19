@@ -18,7 +18,7 @@
         <td><%= truck.plate %></td>
         <td><%= truck.category %></td>
         <td><%= truck.model %></td>
-        <td><button value="<%= truck.id %>" id="show">ดูรถ</button></td>
+        <td><button value="<%= truck.id %>" onclick="myFunction(value)">ดูรถ</button></td>
         <!-- <td><%= link_to 'Show', truck %></td> -->
         <td><%= link_to 'Edit', edit_truck_path(truck) %></td>
         <td><%= link_to 'Destroy', truck, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,9 +30,9 @@
 <br>
 
 <script>
-  $('#show').click(function() {
-    window.location.assign("/trucks/"+this.value)
-  })
+  function myFunction(value) {
+    window.location.assign("/trucks/"+value)
+  }
 </script>
 
 <%= link_to 'New Truck', new_truck_path %>
