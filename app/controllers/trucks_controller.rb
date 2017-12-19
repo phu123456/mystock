@@ -12,6 +12,7 @@ class TrucksController < ApplicationController
   def show
     @tyre = Tyre.new
     @discription = Discription.new
+    @tyres = Tyre.all
   end
 
   # GET /trucks/new

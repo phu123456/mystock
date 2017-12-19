@@ -12,6 +12,33 @@ class TyresController < ApplicationController
   def show
   end
 
+  def swap
+    # current_tyre: current_id,
+    # discription: $('#detail').val(),
+    # new_tyre: $('#selector').val(),
+    # change_date: document.getElementById("inputdatepicker").value
+    # puts @new_tyre
+    # puts "sssssssssss"
+    # puts params
+    # puts "sssssssssss"
+    # puts @new_t/yre
+
+    @discription = Discription.new({"occur":params[:change_date], "detail":params[:discription], "tyre_id":params[:current_tyre]})
+    @discription.save
+
+    @current_tyre = Tyre.find(params[:current_tyre])
+    @new_tyre = Tyre.find(params[:new_tyre])
+
+
+    @current_tyre.update_attribute(:status, "รอตรวจสอบ")
+    @current_tyre.update_attribute(:truck_id, nil)
+    @current_tyre.update_attribute(:position, nil)
+
+    @new_tyre.update_attribute(:status, "กำลังใช้งาน")
+    @new_tyre.update_attribute(:truck_id, params[:truck_id])
+    @new_tyre.update_attribute(:position, params[:current_position])
+
+  end
   # GET /tyres/new
   def new
     @tyre = Tyre.new
@@ -25,7 +52,6 @@ class TyresController < ApplicationController
   # POST /tyres.json
   def create
     @tyre = Tyre.new(tyre_params)
-
     respond_to do |format|
       if @tyre.save
         format.html { redirect_to @tyre, notice: 'Tyre was successfully created.' }

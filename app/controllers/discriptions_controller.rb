@@ -25,6 +25,7 @@ class DiscriptionsController < ApplicationController
   # POST /discriptions.json
   def create
     @discription = Discription.new(discription_params)
+    raise (discription_params).to_json
 
     respond_to do |format|
       if @discription.save
