@@ -1,0 +1,22 @@
+<%= form_with(model: grease, local: true) do |form| %>
+  <% if grease.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(grease.errors.count, "error") %> prohibited this grease from being saved:</h2>
+
+      <ul>
+      <% grease.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :truck_id %>
+    <%= form.select(:truck_id, Truck.all.map{|truck| [truck.plate, truck.id]}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

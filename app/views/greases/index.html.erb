@@ -1,0 +1,55 @@
+<%= render '/layouts/header' %>
+
+
+<h1 align="center">ประวัติการอัดจารบี</h1>
+
+<table class="table table-striped" style="width:75%" align="center" id="myTable">
+  <thead>
+    <tr>
+      <th class="ui-helper-center">ทะเบียนรถ</th>
+      <th class="ui-helper-center">อัดจารบีครั้งล่าสุด</th>
+      <th class="ui-helper-center">อัดจารบีครั้งต่อไป</th>
+      <th class="ui-helper-center">สถานะ</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @greases.each do |grease| %>
+      <tr>
+        <td class="ui-helper-center"><%= Truck.where(id: grease.truck_id).first.plate %></td>
+        <td class="ui-helper-center"><%= grease.updated_at.strftime("%F") %></td>
+        <td class="ui-helper-center">อีก <%= Grease.getExpire(grease.updated_at) %> วัน</td>
+        <td class="ui-helper-center <%= Grease.getStatus(grease.updated_at) %>"></td>
+        <td class="ui-helper-center"> <button class="btn btn-primary btn-xs" id= "<%= grease.id %>" onclick="myFunction(this)">อัพเดต</button> </td>
+        <td class="ui-helper-center"><%= link_to 'Edit', edit_grease_path(grease) %></td>
+        <td class="ui-helper-center"><%= link_to 'Destroy', grease, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div align="center">
+  <%= link_to 'เพิ่มรถ', new_grease_path %>
+</div>
+
+<script>
+  function myFunction(info) {
+    var r = confirm("ยืนยันเพื่ออัพเดทวันที่อัดจารบี");
+    if (r == true) {
+      $.ajax({
+        type:"GET",
+        url:"/greases/repaired",
+        data: {
+          current_id: info.id
+        },
+        dataType:"json",
+        success: function(data){
+          location.reload();
+        }
+      })
+    }
+  }
+</script>

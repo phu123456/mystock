@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :greases do
+    collection do
+      get 'repaired'
+    end
+  end
+
   root to: 'parts#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

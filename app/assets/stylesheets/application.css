@@ -45,3 +45,27 @@ float: right;
   vertical-align: middle;
   /*text-align: center;*/
 }
+
+.red {
+background-image:
+  radial-gradient(
+    circle,
+    red 12px, transparent 12px
+  );
+}
+
+.green {
+background-image:
+  radial-gradient(
+    circle,
+    green 12px, transparent 12px
+  );
+}
+
+.orange {
+background-image:
+  radial-gradient(
+    circle,
+    orange 12px, transparent 12px
+  );
+}
