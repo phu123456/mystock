@@ -251,7 +251,9 @@ $( document ).ready(function() {
 
   category_dict={
       "10Wheels":"<%= asset_path('10Wheels.svg') %>",
-      "12WheelsTrailer":"<%= asset_path('12WheelsTrailer.svg') %>"
+      "12WheelsTrailer":"<%= asset_path('12WheelsTrailer.svg') %>",
+      "12Wheels":"<%= asset_path('12Wheels.svg') %>",
+      "12WheelsSemi":"<%= asset_path('12WheelsSemi.svg') %>"
   };
   document.getElementById('selected-category').innerHTML = '<object data="' + category_dict[category] + '" type="image/svg+xml" id="svg" height=250px; width=400px;  display: none;></object>'
 
