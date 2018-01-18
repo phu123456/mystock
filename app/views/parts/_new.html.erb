@@ -25,8 +25,26 @@
       </div>
 
       <div class="field">
-        <%= form.label :ประเภทรถ %>
-        <%= form.text_area :truck_model, id: 'text_field_three', :required => 'required' %>
+        <!-- <%= form.label :ประเภทรถ %> -->
+        <%= form.text_area :truck_model, id: 'truck-category-val', :required => 'required', :hidden => true %>
+      </div>
+
+      <div class="field">
+        <select id="truck-category">
+          <option value="">-เลือกประเภทรถ-</option>
+          <option value="Isuzu Deca 320">Isuzu Deca 320</option>
+          <option value="Isuzu Deca 270">Isuzu Deca 270</option>
+          <option value="Isuzu R/K 195">Isuzu R/K 195</option>
+          <option value="Isuzu R/K 175">Isuzu R/K 175</option>
+          <option value="Hino Series 500">Hino Series 500</option>
+          <option value="Hino Series เล็ก">Hino Series เล็ก</option>
+          <option value="Hino Mega">Hino Mega</option>
+          <option value="Hino 6ล้อ">Hino 6ล้อ</option>
+          <option value="Volvo">Volvo</option>
+          <option value="Fuso">Fuso</option>
+          <option value="UD">UD</option>
+          <option value="ทุกประเภท">ทุกประเภท</option>
+        </select>
       </div>
 
       <div class="field">
@@ -117,6 +135,11 @@
 
   $('#category-select').on('change', function() {
     document.getElementById('text-category').value = this.value
+    // alert( this.value );
+  })
+
+  $('#truck-category').on('change', function() {
+    document.getElementById('truck-category-val').value = this.value
     // alert( this.value );
   })
 
