@@ -6,7 +6,7 @@ class PartsController < ApplicationController
   # GET /parts.json
 
   def index
-    @parts = Part.search(params[:search]).order('quantity')
+    @parts = Part.search(params[:search]).order('serial')
     @storage = Storage.all
   end
     # @parts = Part.search((params[:q].present? ? params[:q] : '*')).records
