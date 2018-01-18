@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <%= render '/layouts/header' %>
 
 
@@ -45,6 +44,7 @@
         <td class="ui-helper-center"><%= history.updater %></td>
         <td class="ui-helper-center"><%= history.plate %></td>
         <td class="ui-helper-center"><%= history.discription %></td>
+        <td><%= link_to 'Destroy', history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
