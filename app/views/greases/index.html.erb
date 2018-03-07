@@ -21,13 +21,31 @@
         <td class="ui-helper-center"><%= grease.updated_at.strftime("%F") %></td>
         <td class="ui-helper-center">อีก <%= Grease.getExpire(grease.updated_at) %> วัน</td>
         <td class="ui-helper-center <%= Grease.getStatus(grease.updated_at) %>"></td>
-        <td class="ui-helper-center"> <button class="btn btn-primary btn-xs" id= "<%= grease.id %>" onclick="myFunction(this)">อัพเดต</button> </td>
+        <td class="ui-helper-center"> <button type="button" class="btn btn-xs btn-primary 555" data-toggle="modal" data-target=".bd-example-modal-sm" id="<%= grease.id %>" onclick="currentVal(this)" >อัพเดท</button> </td>
+
+        <!-- <td class="ui-helper-center"> <button class="btn btn-primary btn-xs" id= "<%= grease.id %>" onclick="myFunction(this)">อัพเดต</button> </td> -->
         <td class="ui-helper-center"><%= link_to 'Edit', edit_grease_path(grease) %></td>
         <td class="ui-helper-center"><%= link_to 'Destroy', grease, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" align="center">เลือกวันที่อัดจารบี</h5>
+      </div>
+      <br>
+      <div align="center"><input type="date" id="date_picker"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+        <button type="button" class="btn btn-success" onclick="myFunction()">บันทึก</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <br>
 
@@ -36,20 +54,27 @@
 </div>
 
 <script>
-  function myFunction(info) {
-    var r = confirm("ยืนยันเพื่ออัพเดทวันที่อัดจารบี");
-    if (r == true) {
-      $.ajax({
-        type:"GET",
-        url:"/greases/repaired",
-        data: {
-          current_id: info.id
-        },
-        dataType:"json",
-        success: function(data){
-          location.reload();
-        }
-      })
-    }
+  document.getElementById('date_picker').valueAsDate = new Date();
+
+  var current = 0
+  function currentVal(info) {
+    current = info.id
+  }
+
+  function myFunction() {
+    // console.log(current)
+    // console.log(document.getElementById('date_picker').value)
+    $.ajax({
+      type:"GET",
+      url:"/greases/repaired",
+      data: {
+        current_id: current,
+        date_select: document.getElementById('date_picker').value
+      },
+      dataType:"json",
+      success: function(data){
+        location.reload();
+      }
+    })
   }
 </script>

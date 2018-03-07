@@ -23,7 +23,7 @@ class GreasesController < ApplicationController
 
   def repaired
     @current_truck = Grease.find(params[:current_id])
-    @current_truck.update_attribute(:updated_at, Time.now.strftime("%F"))
+    @current_truck.update_attribute(:updated_at, params[:date_select].to_date)
   end
 
   # POST /greases
