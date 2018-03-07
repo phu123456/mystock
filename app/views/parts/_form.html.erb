@@ -1,7 +1,14 @@
-<div style="width:600px; margin:0 auto;" class="wrap">
-    <div class="fleft">
-      <div align="center">
-        <br><br><br><br>
+<div style="width:80; margin:0 auto;" class="wrap">
+
+  <div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">แก้ไข</a></li>
+      <li><a href="#tab2" data-toggle="tab">นำเข้า</a></li>
+      <li><a href="#tab3" data-toggle="tab">นำออก</a></li>
+
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
         <%= form_with(model: part, local: true) do |form| %>
           <% if part.errors.any? %>
             <div id="error_explanation">
@@ -14,60 +21,141 @@
               </ul>
             </div>
           <% end %>
+          <div align="center">
+            <br>
+            <div class="field">
+              <%= form.label :ชื่อ %>
+              <%= form.text_field :name, id: :part_name %>
+            </div>
 
-          <div class="field">
-            <%= form.label :จำนวนที่เพิ่ม %>
-            <%= form.number_field :add, id: :add %>
-          </div>
+            <div class="field">
+              <%= form.label :รหัส %>
+              <%= form.text_field :serial, id: :part_serial %>
+            </div>
 
-          <div class="field">
-            <%= form.label :ราคารวม %>
-            <%= form.number_field :price, id: :price %>
-          </div>
+            <div class="field">
+              <%= form.label :รุ่นรถ %>
+              <select name="part[truck_model]"><option value="<%= @part.truck_model %>"><%= @part.truck_model %></option>
+                <option value="Isuzu">Isuzu</option>
+                <option value="Isuzu Deca 320">Isuzu Deca 320</option>
+                <option value="Isuzu Deca 270">Isuzu Deca 270</option>
+                <option value="Isuzu R/K 195">Isuzu R/K 195</option>
+                <option value="Isuzu R/K 175">Isuzu R/K 175</option>
+                <option value="Hino">Hino</option>
+                <option value="Hino Series 500">Hino Series 500</option>
+                <option value="Hino Series เล็ก">Hino Series เล็ก</option>
+                <option value="Hino Mega">Hino Mega</option>
+                <option value="Hino 6ล้อ">Hino 6ล้อ</option>
+                <option value="Volvo">Volvo</option>
+                <option value="Fuso">Fuso</option>
+                <option value="UD">UD</option>
+                <option value="ทุกประเภท">ทุกประเภท</option>
+              </select>
+              <!-- <%= form.select :truck_model, options_for_select([["เลือก", ""], "Cell", "Work", "Office", "Home", "Other"]), :class => 'genForm_dropBox' %> -->
+              <!-- <%= form.text_field :truck_model, id: :part_truck_model %> -->
+            </div>
 
-          <div class="actions">
-            <%= form.submit "เพิ่มเข้าสต๊อก"%>
-          </div>
+            <div class="field">
+              <%= form.label :ประเภท %>
+              <select name="part[category]"><option value="<%= @part.category %>"><%= @part.category %></option>
+                <option value="อะไหล่เครื่อง">อะไหล่เครื่อง</option>
+                <option value="อะไหล่ตัวถัง">อะไหล่ตัวถัง</option>
+                <option value="เบรค">เบรค</option>
+                <option value="เกียร์">เกียร์</option>
+                <option value="ช่วงล่าง">ช่วงล่าง</option>
+                <option value="หางพ่วง">หางพ่วง</option>
+                <option value="ของเหลว">ของเหลว</option>
+                <option value="จิปะถะ">จิปะถะ</option>
+              </select>
+            </div>
 
+            <div class="field">
+
+              <%= form.label :จำนวน %>
+              <%= form.text_field :quantity, id: :part_quantity %>
+            </div>
+
+            <!-- params.require(:part).permit(:name, :serial, :truck_model, :category, :quantity, :search, :storage_id, :shelf) -->
+
+
+            <div class="actions">
+              <%= form.submit "บันทึก"%>
+            </div>
+        </div>
         <% end %>
-      </div>
-    </div>
-    <div class="fright">
-      <div class="test" align="center">
-        <br>
-        <%= form_with(model: part, local: true) do |form| %>
-          <% if part.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(part.errors.count, "error") %> prohibited this part from being saved:</h2>
 
-              <ul>
-              <% part.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-              </ul>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <div align="center">
+          <br>
+          <%= form_with(model: part, local: true) do |form| %>
+            <% if part.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(part.errors.count, "error") %> prohibited this part from being saved:</h2>
+
+                <ul>
+                <% part.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field">
+              <%= form.label :จำนวนที่เพิ่ม %>
+              <%= form.number_field :add, id: :add %>
+            </div>
+
+            <div class="field">
+              <%= form.label :ราคารวม %>
+              <%= form.number_field :price, id: :price %>
+            </div>
+
+            <div class="actions">
+              <%= form.submit "เพิ่มเข้าสต๊อก"%>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+      <div class="tab-pane" id="tab3">
+        <div align="center">
+          <br>
+          <%= form_with(model: part, local: true) do |form| %>
+            <% if part.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(part.errors.count, "error") %> prohibited this part from being saved:</h2>
+
+                <ul>
+                <% part.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field">
+              <%= form.label :จำนวนที่เอาออก %>
+              <%= form.number_field :out, id: :part_out%>
+            </div>
+
+
+            <div class="field">
+              <%= form.label :ทะเบียนรถ %>
+              <%= form.text_area :plate, id: :part_plate%>
+            </div>
+
+            <div class="field">
+              <%= form.label :หมายเหตุ %>
+              <%= form.text_area :discription, id: :part_discription%>
+            </div>
+
+            <div class="actions">
+              <%= form.submit "ออกจากสต๊อก" %>
             </div>
           <% end %>
-
-          <div class="field">
-            <%= form.label :จำนวนที่เอาออก %>
-            <%= form.number_field :out, id: :part_out%>
-          </div>
-
-
-          <div class="field">
-            <%= form.label :ทะเบียนรถ %>
-            <%= form.text_area :plate, id: :part_plate%>
-          </div>
-
-          <div class="field">
-            <%= form.label :หมายเหตุ %>
-            <%= form.text_area :discription, id: :part_discription%>
-          </div>
-
-          <div class="actions">
-            <%= form.submit "ออกจากสต๊อก" %>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
+  </div>
 </div>
