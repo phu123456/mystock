@@ -2,7 +2,16 @@
 <%= render '/layouts/header' %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h1 align="center">พนักงานขับรถ</h1>
-<div align="center"><input placeholder="ค้นหาชื่อ" type="text" id="name-search" size="15" style="height:23px;"></div>
+<div align="center"><input placeholder="ค้นหาชื่อ" type="text" id="name-search" size="15" style="height:23px;">
+  &emsp; เลือกชนิด:
+  <select id="category">
+    <option value="all" selected>ทั้งหมด</option>
+    <option value="อะไหล่เครื่อง">ใบขับขี่</option>
+    <option value="เกียร์">บัตรประชาชน</option>
+    <option value="เบรค">บัตรปูนซีเมนต์นครหลวง</option>
+  </select>
+</div>
+
 <table class="table table-striped" style="width:75%" align="center" id="myTable" >
   <thead>
     <tr>
@@ -103,5 +112,13 @@
         $(this).toggle(id.indexOf(value) !== -1);
     });
   });
+
+  $('#category').on('change', function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+   })
 
 </script>
