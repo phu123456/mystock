@@ -4,7 +4,7 @@ class GreasesController < ApplicationController
   # GET /greases
   # GET /greases.json
   def index
-    @greases = Grease.all
+    @greases = Grease.order(updated_at: :asc)
   end
 
   # GET /greases/1
