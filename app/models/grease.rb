@@ -1,11 +1,11 @@
 class Grease < ApplicationRecord
   def self.getExpire(date)
-    return (date.strftime("%F").to_date - Date.today.strftime("%F").to_date).to_i + 15
+    return (date.strftime("%F").to_date - Date.today.strftime("%F").to_date).to_i + 20
     # return (Date.today.to_date - date.strftime("%F").to_date).to_i
   end
 
   def self.getStatus(date)
-    expire_in = (date.strftime("%F").to_date - Date.today.strftime("%F").to_date).to_i + 15
+    expire_in = (date.strftime("%F").to_date - Date.today.strftime("%F").to_date).to_i + 20
     if expire_in < 2
       return "1 red"
     elsif expire_in < 5
