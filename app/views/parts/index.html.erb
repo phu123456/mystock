@@ -18,7 +18,7 @@
       <input type="text" id="search" placeholder="ค้นหาอะไหล่">
       &emsp; เลือกชนิด:
       <select id="category">
-        <option value="all" selected>ทั้งหมด</option>
+        <option value="" selected>ทั้งหมด</option>
         <option value="อะไหล่เครื่อง">อะไหล่เครื่อง</option>
         <option value="เกียร์">เกียร์</option>
         <option value="เบรค">เบรค</option>
@@ -93,6 +93,7 @@ var $rows = $('#search-table tr');
        return !~text.indexOf(val);
    }).hide();
   })
+
 </script>
 
 <!-- Modal -->

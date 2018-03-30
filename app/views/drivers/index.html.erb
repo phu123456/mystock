@@ -5,10 +5,10 @@
 <div align="center"><input placeholder="ค้นหาชื่อ" type="text" id="name-search" size="15" style="height:23px;">
   &emsp; เลือกชนิด:
   <select id="category">
-    <option value="all" selected>ทั้งหมด</option>
-    <option value="อะไหล่เครื่อง">ใบขับขี่</option>
-    <option value="เกียร์">บัตรประชาชน</option>
-    <option value="เบรค">บัตรปูนซีเมนต์นครหลวง</option>
+    <option value="" selected>ทั้งหมด</option>
+    <option value="ใบขับขี่">ใบขับขี่</option>
+    <option value="บัตรประชาชน">บัตรประชาชน</option>
+    <option value="บัตรปูนซีเมนต์นครหลวง">บัตรปูนซีเมนต์นครหลวง</option>
   </select>
 </div>
 
@@ -25,7 +25,7 @@
     </tr>
   </thead>
 
-  <tbody class="data-table">
+  <tbody id="search-table">
     <% @drivers.each do |driver| %>
       <tr>
         <td class="ui-helper-center"><%= driver.name %></td>
@@ -106,12 +106,14 @@
 
   $("#name-search").keyup(function() {
     var value = this.value;
-    $(".data-table").find("tr").each(function(index) {
+    $("#search-table").find("tr").each(function(index) {
         if (index === -1) return;
         var id = $(this).find("td").first().text();
         $(this).toggle(id.indexOf(value) !== -1);
     });
   });
+
+  var $rows = $('#search-table tr');
 
   $('#category').on('change', function() {
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
@@ -120,5 +122,7 @@
         return !~text.indexOf(val);
     }).hide();
    })
+
+
 
 </script>
