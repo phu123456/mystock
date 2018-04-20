@@ -19,8 +19,8 @@
     <tr>
       <th class="ui-helper-center">ชื่อ</th>
       <th class="ui-helper-center">จำนวนที่เปลี่ยน</th>
-      <th class="ui-helper-center">ราคา</th>
-      <th class="ui-helper-center">จำนวนใหม่</th>
+      <!-- <th class="ui-helper-center">ราคา</th> -->
+      <th class="ui-helper-center">จำนวนที่เหลือ</th>
       <th class="ui-helper-center">ปี/เดือน/วัน</th>
       <th class="ui-helper-center">คนอัพเดท</th>
       <th class="ui-helper-center">ทะเบียนรถ</th>
@@ -33,13 +33,9 @@
     <% @histories.each do |history| %>
       <tr>
         <td class="ui-helper-center"><%= history.name %></td>
-          <% if history.quantity.to_i > 0 %>
-             <td class="ui-helper-center"> +<%= history.quantity %> </td>
-          <% else %>
-             <td class="ui-helper-center"> <%= history.quantity %> </td>
-          <% end %>
-        <td class="ui-helper-center"> <%= history.price %> </td>
-        <td class="ui-helper-center"><font color="grey"><%= history.previous %> -> </font> <b> <%= history.current %> <b></td>
+        <td class="ui-helper-center"> <%= history.quantity %> </td>
+        <td class="ui-helper-center"> <%= history.current %> </td>
+        <!-- <td class="ui-helper-center"><font color="grey"><%= history.previous %> -> </font> <b> <%= history.current %> <b></td> -->
         <td class="ui-helper-center"><%= history.update_date %></td>
         <td class="ui-helper-center"><%= history.updater %></td>
         <td class="ui-helper-center"><%= history.plate %></td>

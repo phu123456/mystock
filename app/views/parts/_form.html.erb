@@ -134,12 +134,14 @@
                 </ul>
               </div>
             <% end %>
-
+            <div class="field">
+              <%= form.label :วันที่ %>
+              <input type="date" id="date_picker">
+            </div>
             <div class="field">
               <%= form.label :จำนวนที่เอาออก %>
               <%= form.number_field :out, id: :part_out%>
             </div>
-
 
             <div class="field">
               <%= form.label :ทะเบียนรถ %>
@@ -152,7 +154,7 @@
             </div>
 
             <div class="actions">
-              <%= form.submit "ออกจากสต๊อก" %>
+              <%= form.submit "ออกจากสต๊อก", id: :dd %>
             </div>
           <% end %>
         </div>
@@ -160,3 +162,28 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('date_picker').valueAsDate = new Date();
+
+  $("#dd").click(function(){
+    // console.log($("#part_out").val())
+    $.ajax({
+      type:"GET",
+      url:"/parts/his",
+      data: {
+        date_select: document.getElementById('date_picker').value,
+        part_out: "-" + $("#part_out").val(),
+        amount_left: <%= @part.quantity %> - $("#part_out").val(),
+        plate: $("#part_plate").val(),
+        discription: $("#part_discription").val(),
+        name: "<%= @part.name %>"
+      },
+      dataType:"json",
+      success: function(data){
+        location.reload();
+      }
+    })
+  });
+
+</script>

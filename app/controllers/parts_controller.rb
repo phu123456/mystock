@@ -16,6 +16,22 @@ class PartsController < ApplicationController
   def show
   end
 
+  def his
+    puts "ahshdklhis"
+    # date_select: document.getElementById('date_picker').value,
+    # part_out: $("#part_out").val(),
+    # plate: $("#part_plate").val(),
+    # discription: $("#part_discription").val(),
+    # params[:name], params[:date_select], params[:part_out], params[:plate], params[:discription]
+    @history = History.new(name: params[:name], quantity:  params[:part_out], plate: params[:plate], update_date: params[:date_select], discription: params[:discription], updater: current_user.email, current: params[:amount_left])
+    if @history.save
+      format.html { redirect_to parts_path, notice: 'Part was successfully created.' }
+      format.json { render :show, status: :created, location: @part }
+    end
+    # puts params[:name]
+    # raise @part.name
+  end
+
   # GET /parts/new
   def new
     @part = Part.new
@@ -48,18 +64,18 @@ class PartsController < ApplicationController
 
   # PATCH/PUT /parts/1
   # PATCH/PUT /parts/1.json
+
   def update
     # save to history
-    require 'date'
-    d = DateTime.now
-    # raise part_params[:name].to_json
+    # require 'date'
+    d = params[:date_select]
     current = (@part.quantity.to_i + in_out_params[:add].to_i - in_out_params[:out].to_i).to_json
-    @history = History.new(name: @part.name, quantity: in_out_params[:add].to_i - in_out_params[:out].to_i, update_date: d, plate: in_out_params[:plate], updater: current_user.email, previous: @part.quantity, current: current, price: in_out_params[:price] , discription:in_out_params[:discription])
+    # @history = History.new(name: @part.name, quantity: in_out_params[:add].to_i - in_out_params[:out].to_i, update_date: d, plate: in_out_params[:plate], updater: current_user.email, previous: @part.quantity, current: current, price: in_out_params[:price] , discription:in_out_params[:discription])
 
     #update to part
     @part.quantity = (@part.quantity.to_i + in_out_params[:add].to_i - in_out_params[:out].to_i).to_json
     respond_to do |format|
-      if @part.update(part_params) && @history.save
+      if @part.update(part_params)
         format.html { redirect_to parts_path, notice: 'Part was successfully updated.' }
         format.json { render :show, status: :ok, location: @part }
       else

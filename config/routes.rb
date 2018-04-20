@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :storages
   resources :histories
-  resources :parts
 
   resources :tyres do
     collection do
@@ -17,6 +16,12 @@ Rails.application.routes.draw do
   resources :greases do
     collection do
       get 'repaired'
+    end
+  end
+
+  resources :parts do
+    collection do
+      get 'his'
     end
   end
 
